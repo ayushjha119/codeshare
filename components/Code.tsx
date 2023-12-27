@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 interface CodeProps {
   placeholder: string;
-  initalValue?: string;
+  initialValue?: string;
 }
 
 import clsx from "clsx";
