@@ -42,7 +42,7 @@ export default function Select<T extends GradientBackground | LanguageName>({
           {type === "language" ? (
             <span>{initialValue as LanguageName}</span>
           ) : (
-            <ThemeBubble color={(initialValue as GradientBackground).value} />
+            <ThemeBubble color={(initialValue as GradientBackground).class} />
           )}
           <span className="pointer-events-none">
             <ChevronDownIcon className="h-3 w-3" aria-hidden="true" />
@@ -59,9 +59,37 @@ export default function Select<T extends GradientBackground | LanguageName>({
             <Listbox.Options
               className={clsx(
                 "absolute z-10 max-h-80 -translate-x-1/4 -translate-y-3/4 space-y-1 overflow-auto rounded-xl p-2",
-                "border-[1px] border-white/20 bg-black"
+                "border-[1px] border-white/20 bg-black",
+                "focus:outline-none"
               )}
-            ></Listbox.Options>
+            >
+              {options.map((option, i) => (
+                <Listbox.Option
+                  key={`${type} - ${i}`}
+                  value={option}
+                  className={clsx(
+                    "flex items-center gap-3 rounded-lg p-2 text-xs",
+                    "cursor-pointer select-none",
+                    "transition-colors duration-200 ease-in-out"
+                  )}
+                >
+                  {type === "language" ? (
+                    <span className="block truncate pr-9">
+                      {option as LanguageName}
+                    </span>
+                  ) : (
+                    <>
+                      <ThemeBubble
+                        color={(option as GradientBackground).class}
+                      />
+                      <span className="block truncate">
+                        {(option as GradientBackground).name}
+                      </span>
+                    </>
+                  )}
+                </Listbox.Option>
+              ))}
+            </Listbox.Options>
           </Transition>
         </Listbox.Button>
       </div>
